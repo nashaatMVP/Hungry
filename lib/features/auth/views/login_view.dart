@@ -14,13 +14,14 @@ class LoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     TextEditingController emailController = TextEditingController();
     TextEditingController passController = TextEditingController();
-    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
+        resizeToAvoidBottomInset: true,
         backgroundColor: Colors.white,
         body: Center(
           child: Form(
@@ -47,59 +48,61 @@ class LoginView extends StatelessWidget {
                           topLeft: Radius.circular(30),
                         ),
                       ),
-                      child: Column(
-                        children: [
-                          Gap(30),
-                          CustomTxtfield(
-                            controller: emailController,
-                            hint: 'Email Address',
-                            isPassword: false,
-                          ),
-                          Gap(15),
-                          CustomTxtfield(
-                            controller: passController,
-                            hint: 'Password',
-                            isPassword: true,
-                          ),
-                          Gap(20),
-                          CustomAuthBtn(
-                            color: AppColors.primary,
-                            textColor: Colors.white,
-                            text: 'Login',
-                            onTap: () {
-                              if(formKey.currentState!.validate()) {
-                                print('success login');
-                              }
-                            },
-                          ),
-                          Gap(15),
-                          /// go to Signup
-                          CustomAuthBtn(
-                            textColor: AppColors.primary,
-                            color: Colors.white,
-                            text: 'Create Account ?',
-                            onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (c) {
-                                return SignupView();
-                              }));
-                            },
-                          ),
-                          /// Guest
-                          Gap(20),
-                          GestureDetector(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Gap(30),
+                            CustomTxtfield(
+                              controller: emailController,
+                              hint: 'Email Address',
+                              isPassword: false,
+                            ),
+                            Gap(15),
+                            CustomTxtfield(
+                              controller: passController,
+                              hint: 'Password',
+                              isPassword: true,
+                            ),
+                            Gap(20),
+                            CustomAuthBtn(
+                              color: AppColors.primary,
+                              textColor: Colors.white,
+                              text: 'Login',
+                              onTap: () {
+                                if(formKey.currentState!.validate()) {
+                                  print('success login');
+                                }
+                              },
+                            ),
+                            Gap(15),
+                            /// go to Signup
+                            CustomAuthBtn(
+                              textColor: AppColors.primary,
+                              color: Colors.white,
+                              text: 'Create Account ?',
                               onTap: () {
                                 Navigator.push(context, MaterialPageRoute(builder: (c) {
-                                  return Root();
+                                  return SignupView();
                                 }));
                               },
-                              child: CustomText(
-                                text: 'Continue as a guest ?',
-                                size: 13,
-                                color: Colors.white,
-                                weight: FontWeight.bold,
-                              ),
-                          ),
-                     ],
+                            ),
+                            /// Guest
+                            Gap(20),
+                            GestureDetector(
+                                onTap: () {
+                                  Navigator.push(context, MaterialPageRoute(builder: (c) {
+                                    return Root();
+                                  }));
+                                },
+                                child: CustomText(
+                                  text: 'Continue as a guest ?',
+                                  size: 13,
+                                  color: Colors.white,
+                                  weight: FontWeight.bold,
+                                ),
+                            ),
+                                               ],
+                        ),
                       ),
                     ),
                   ),
@@ -107,8 +110,6 @@ class LoginView extends StatelessWidget {
             ),
           ),
         ),
-
-
       ),
     );
   }

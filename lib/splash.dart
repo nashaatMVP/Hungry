@@ -28,7 +28,7 @@ class _SplashViewState extends State<SplashView> with SingleTickerProviderStateM
       const Duration(seconds: 1),
           () => Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (c) => LoginView()),
+        MaterialPageRoute(builder: (c) => Root()),
       ),
     );
   }

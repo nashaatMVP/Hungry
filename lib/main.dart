@@ -27,8 +27,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
       title: 'Hungry App',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         splashColor: Colors.transparent,
         scaffoldBackgroundColor: Colors.white,

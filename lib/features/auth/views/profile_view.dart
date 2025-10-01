@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:huungry/core/constants/app_colors.dart';
+import 'package:huungry/features/auth/views/login_view.dart';
 import 'package:huungry/features/auth/widgets/custom_user_txt_field.dart';
 import '../../../shared/custom_text.dart';
 
@@ -42,7 +43,7 @@ class _ProfileViewState extends State<ProfileView> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     GestureDetector(
-                      onTap: () => Navigator.pop(context),
+                      onTap: () => Navigator.popUntil(context, (route) => route.isFirst),
                       child: Icon(Icons.arrow_back , color: Colors.white),
                     ),
                     Padding(
@@ -103,7 +104,6 @@ class _ProfileViewState extends State<ProfileView> {
             ),
           ),
         ),
-
         bottomSheet: Container(
           height: 70,
           decoration: BoxDecoration(
@@ -138,21 +138,28 @@ class _ProfileViewState extends State<ProfileView> {
                 ),
 
                 /// logout
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 30,vertical: 15),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: AppColors.primary),
-                    borderRadius: BorderRadius.circular(8),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (c) {
+                      return LoginView();
+                    }));
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 30,vertical: 15),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: AppColors.primary),
+                      borderRadius: BorderRadius.circular(8),
 
+                    ),
+                    child: Row(
+                      children: [
+                        CustomText(text: 'Logout', weight: FontWeight.bold, color: AppColors.primary),
+                        Gap(5),
+                        Icon(Icons.logout, color: AppColors.primary),
+                      ],
+                    )
                   ),
-                  child: Row(
-                    children: [
-                      CustomText(text: 'Logout', weight: FontWeight.bold, color: AppColors.primary),
-                      Gap(5),
-                      Icon(Icons.logout, color: AppColors.primary),
-                    ],
-                  )
                 ),
               ],
             ),
