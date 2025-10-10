@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_3d_controller/flutter_3d_controller.dart';
 import 'package:gap/gap.dart';
-import 'package:model_viewer_plus/model_viewer_plus.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../shared/custom_text.dart';
 

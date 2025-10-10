@@ -45,10 +45,16 @@ class _CustomTxtfieldState extends State<CustomTxtfield> {
             child: Icon(CupertinoIcons.eye ,color: AppColors.primary),
         ) : null,
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: AppColors.primary),
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: Colors.grey),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.white),
+          borderRadius: BorderRadius.circular(20),
+          borderSide: BorderSide(color: Colors.grey),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+          borderSide: BorderSide(color: Colors.red),
         ),
         hintText: widget.hint,
         hintStyle: TextStyle(color: AppColors.primary),

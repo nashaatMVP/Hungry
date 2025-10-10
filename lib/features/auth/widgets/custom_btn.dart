@@ -19,7 +19,7 @@ class CustomAuthBtn extends StatelessWidget {
             color: color ??  Colors.white,
             borderRadius: BorderRadius.circular(7),
             border: Border.all(
-              color: Colors.white,
+              color: Colors.grey,
             ),
         ),
         width: double.infinity,
