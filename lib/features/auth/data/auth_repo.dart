@@ -8,6 +8,7 @@ import 'package:huungry/features/auth/data/user_model.dart';
 class AuthRepo {
   ApiService apiService = ApiService();
   bool isGuest = false;
+  UserModel? _currentUser;
 
   /// Login
   Future<UserModel?> login(String email, String password) async {
@@ -25,15 +26,24 @@ class AuthRepo {
         final code = response['code'];
         final data = response['data'];
 
+        print('📡 Login response - code: $code, data: $data');
+
         if (code != 200 && code != 201) {
           throw ApiError(message: msg ?? 'Unknown error');
         }
 
         final user = UserModel.fromJson(data);
+        print('🔐 Login successful - User token: ${user.token ?? 'null'}');
+
         if (user.token != null) {
           await PrefHelper.saveToken(user.token!);
+          print('💾 Token saved to storage: ${user.token}');
+        } else {
+          print('⚠️ No token received from server!');
         }
+
         isGuest = false;
+        _currentUser = user;
         return user;
       } else {
         throw ApiError(message: 'UnExpected Error From Server');
@@ -72,6 +82,8 @@ class AuthRepo {
         if (user.token != null) {
           await PrefHelper.saveToken(user.token!);
         }
+        isGuest = false;
+        _currentUser = user;
         return user;
       } else {
         throw ApiError(message: 'UnExpected Error From Server');
@@ -92,7 +104,9 @@ class AuthRepo {
       }
 
       final response = await apiService.get('/profile');
-      return UserModel.fromJson(response['data']);
+      final user = UserModel.fromJson(response['data']);
+      _currentUser = user;
+      return user;
     } on DioError catch (e) {
       throw ApiExceptions.handleError(e);
     } catch (e) {
@@ -120,7 +134,6 @@ class AuthRepo {
             filename: 'profile.jpg',
           ),
       });
-
       final response = await apiService.post('/update-profile', formData);
       if (response is ApiError) {
         throw response;
@@ -136,9 +149,11 @@ class AuthRepo {
           throw ApiError(message: msg ?? 'Unknown error');
         }
 
-        return UserModel.fromJson(data);
+        final updatedUser = UserModel.fromJson(data);
+        _currentUser = updatedUser;
+        return updatedUser;
       } else {
-        throw ApiError(message: 'Invaild  Error from here');
+        throw ApiError(message: 'Invalid  Error from here');
       }
     } on DioError catch (e) {
       throw ApiExceptions.handleError(e);
@@ -154,24 +169,36 @@ class AuthRepo {
       throw ApiError(message: 'kfnepkvnfkb');
     }
     await PrefHelper.clearToken();
+    _currentUser = null;
+    isGuest = true;
   }
 
   /// auto login
   Future<UserModel?> autoLogin() async {
     final token = await PrefHelper.getToken();
+    print('🔑 Token from storage: ${token ?? 'null'}');
+
     if (token == null || token == 'guest') {
+      print('❌ No valid token found - setting as guest');
       isGuest = true;
+      _currentUser = null;
       return null;
     }
+
+    print('✅ Valid token found - attempting to fetch profile');
     isGuest = false;
+
     try {
       final user = await getProfileData();
+      print('✅ Profile data fetched successfully');
+      _currentUser = user;
       return user;
-    } catch (_) {
-      // If profile fetch fails, clear the token and set as guest
-      // This handles cases where token is invalid or expired
+    } catch (e) {
+      print('❌ Profile fetch failed: $e');
+      print('🧹 Clearing invalid token and setting as guest');
       await PrefHelper.clearToken();
       isGuest = true;
+      _currentUser = null;
       return null;
     }
   }
@@ -179,6 +206,11 @@ class AuthRepo {
   /// continue as guest
   Future<void> continueAsGuest() async {
     isGuest = true;
+    _currentUser = null;
     await PrefHelper.saveToken('guest');
   }
+
+  UserModel? get currentUser => _currentUser;
+
+  bool get isLoggedIn => !isGuest && _currentUser != null;
 }

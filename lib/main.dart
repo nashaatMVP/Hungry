@@ -8,11 +8,7 @@ import 'features/auth/views/signup_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await SystemChrome.setPreferredOrientations(
-   [
-     DeviceOrientation.portraitUp,
-   ],
-  );
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(
     ScreenUtilInit(
       designSize: const Size(375, 812),
@@ -37,4 +33,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
