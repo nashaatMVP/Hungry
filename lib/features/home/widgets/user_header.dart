@@ -12,18 +12,39 @@ class UserHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SvgPicture.asset('assets/logo/logo.svg', color: AppColors.primary, height: 32),
-            Gap(5),
-            CustomText(text: 'Hello, Rich Sonic', size: 16, weight: FontWeight.w500, color: Colors.grey.shade500),
+            Row(
+              children: [
+                CustomText(
+                  text: 'Hello,',
+                  size: 30,
+                  weight: FontWeight.w400,
+                  color: Colors.grey.shade500,
+                ),
+                CustomText(
+                  text: ' Rich Sonic',
+                  size: 30,
+                  weight: FontWeight.w200,
+                  color: AppColors.primary,
+                ),
+              ],
+            ),
+            // SvgPicture.asset(
+            //     'assets/logo/logo.svg',
+            //     color: AppColors.primary,
+            //     height: 28,
+            // ),
+            CustomText(
+                text: 'Hungry Today?',
+                size: 14,
+                weight: FontWeight.w500,
+                color: Colors.grey.shade500,
+            ),
           ],
         ),
-
         Spacer(),
-
         CircleAvatar(
             radius: 30,
             backgroundColor: AppColors.primary,
@@ -32,8 +53,6 @@ class UserHeader extends StatelessWidget {
                 child: Image.asset('assets/test/kunckles.jpg'),
             ),
         ),
-
-
       ],
     );
   }

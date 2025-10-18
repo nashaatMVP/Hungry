@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'custom_text.dart';
 
 SnackBar customSnack(errorMsg) {
@@ -10,17 +11,19 @@ SnackBar customSnack(errorMsg) {
    elevation: 10,
    behavior: SnackBarBehavior.floating,
    backgroundColor: Colors.red.shade900,
-   content: Row(
-     children: [
-       const Icon(CupertinoIcons.info, color: Colors.white),
-       const SizedBox(width: 14),
-       CustomText(
-         text: errorMsg,
-         color: Colors.white,
-         size: 10,
-         weight: FontWeight.w600,
-       ),
-     ],
+   content: FittedBox(
+     child: Row(
+       children: [
+         const Icon(CupertinoIcons.info, color: Colors.white),
+         Gap(14),
+         CustomText(
+           text: errorMsg,
+           color: Colors.white,
+           size: 10,
+           weight: FontWeight.w600,
+         ),
+       ],
+     ),
    ),
  );
 }

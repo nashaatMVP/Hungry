@@ -27,21 +27,19 @@ class _FoodCategoryState extends State<FoodCategory> {
       child: Row(
         children: List.generate(widget.category.length, (index) {
           return GestureDetector(
-            onTap: () {
-              setState(() {
-                selectedIndex = index;
-              });
-            },
+            onTap: () => setState(() => selectedIndex = index),
             child: Container(
               margin: EdgeInsets.only(right: 8),
               decoration: BoxDecoration(
+                border: Border.all(color: Colors.black12),
                 color: selectedIndex == index
                     ? AppColors.primary
                     : Color(0xffF3F4F6),
                 borderRadius: BorderRadius.circular(20),
               ),
-              padding: EdgeInsets.symmetric(horizontal: 27,vertical: 15),
+              padding: EdgeInsets.symmetric(horizontal: 20,vertical: 6),
               child: CustomText(
+                size: 14,
                 text: widget.category[index],
                 weight: FontWeight.w500,
                 color: selectedIndex == index ? Colors.white : Colors.grey.shade700,

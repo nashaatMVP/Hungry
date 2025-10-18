@@ -15,9 +15,12 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter_svg: ^2.2.1
   gap: ^3.0.1
-  model_viewer_plus: ^1.9.3
-  flutter_3d_controller: ^2.3.0
   flutter_screenutil: ^5.9.3
+  dio: ^5.9.0
+  shared_preferences: ^2.5.3
+  skeletonizer: ^1.4.3
+  image_picker: ^1.2.0
+  animate_icons: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -37,6 +40,7 @@ flutter:
     - assets/test/
     - assets/detail/
     - assets/icon/
+    - assets/banner/
 
   # fonts:
   #   - family: Schyler

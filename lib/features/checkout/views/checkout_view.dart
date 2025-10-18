@@ -71,7 +71,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                 ),
                 tileColor: Colors.blue.shade900,
                 contentPadding: EdgeInsets.symmetric(vertical: 2, horizontal: 16),
-                leading: Image.asset('assets/icon/visa.webp', width: 50),
+                leading: Icon(CupertinoIcons.creditcard, color: Colors.white),
                 title: CustomText(text: 'Debit card',color: Colors.white),
                 subtitle: CustomText(text: '**** ***** 2342',color: Colors.white),
                 trailing: Radio<String>(

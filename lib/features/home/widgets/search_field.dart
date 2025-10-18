@@ -1,31 +1,32 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:huungry/core/constants/app_colors.dart';
 
 class SearchField extends StatelessWidget {
   const SearchField({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      elevation: 2,
-      shadowColor: Colors.grey,
-      borderRadius: BorderRadius.circular(15),
+    return SizedBox(
+      height: 40,
       child: TextField(
+        cursorHeight: 15,
         decoration: InputDecoration(
-          hintText: 'Search..',
-          fillColor: Colors.white,
           filled: true,
-          prefixIcon: Icon(CupertinoIcons.search),
+          contentPadding: EdgeInsets.zero,
+          hintText: 'Search..',
+          fillColor: Colors.transparent,
+          prefixIcon: Icon(CupertinoIcons.search, size: 18),
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(40),
             borderSide: BorderSide(
-              color: Colors.white,
+              color: AppColors.primary.withOpacity(0.3),
             ),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(40),
             borderSide: BorderSide(
-              color: Colors.white,
+              color: Colors.black,
             ),
           ),
         ),

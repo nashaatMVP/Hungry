@@ -1,32 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:huungry/core/constants/app_colors.dart';
 
 class CustomUserTxtField extends StatelessWidget {
   const CustomUserTxtField({
     super.key,
     required this.controller,
     required this.label,
-
+    this.textInputType,
   });
   final TextEditingController controller;
   final String label;
-
+  final TextInputType? textInputType;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
-      controller: controller,
-      cursorColor: Colors.white,
       cursorHeight: 20,
-      style: TextStyle(color: Colors.white),
+      controller: controller,
+      keyboardType: textInputType,
+      cursorColor: AppColors.primary,
+      style: TextStyle(color: AppColors.primary, fontSize: 14),
       decoration: InputDecoration(
+        contentPadding: EdgeInsets.symmetric(horizontal: 20),
         labelText: label,
-        labelStyle: TextStyle(color: Colors.white),
+        labelStyle: TextStyle(color: AppColors.primary),
+        hintStyle: TextStyle(color: AppColors.primary),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.white),
-          borderRadius: BorderRadius.circular(15),
+          borderSide: BorderSide(color: AppColors.primary),
+          borderRadius: BorderRadius.circular(25),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.white),
+          borderSide: BorderSide(color: AppColors.primary),
           borderRadius: BorderRadius.circular(15),
         ),
       ),

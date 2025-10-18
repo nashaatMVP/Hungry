@@ -38,8 +38,8 @@ class OrderHistoryView extends StatelessWidget {
                               child:
                               Image.asset(
                                 'assets/test/test.png',
-                                width: 120,
-                                height: 120,
+                                width: 90,
+                                height: 90,
                               ),
                             ),
                           ],
@@ -51,9 +51,10 @@ class OrderHistoryView extends StatelessWidget {
                               CustomText(
                                   text: 'Hamburger Hamburger',
                                   weight: FontWeight.bold,
+                                  size: 14,
                               ),
-                              CustomText(text: 'Qty : X3'),
-                              CustomText(text: 'Price : 20\$'),
+                              CustomText(text: 'Qty : X3', size: 14,),
+                              CustomText(text: 'Price : 20\$', size: 14),
                             ],
                           ),
                         ),
@@ -61,6 +62,7 @@ class OrderHistoryView extends StatelessWidget {
                     ),
                     Gap(20),
                     CustomButton(
+                        height: 45,
                         text: 'Order Again' ,
                         color: Colors.grey.shade400,
                         width: double.infinity,
