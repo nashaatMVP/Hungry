@@ -1,6 +1,6 @@
-🍔 Huungry App
+# 🍔 Huungry App
 
-Huungry (yes, with two “u”s 😋) is a Flutter application built to teach beginners how to work with APIs in Flutter — from zero to hero.
+Huungry ? Yes Let's Eat!,  is a Flutter application built to teach beginners how to work with APIs in Flutter — from zero to hero.
 
 It’s part of the Ritschsonic YouTube series, where we build a modern food delivery app from scratch, focusing on:
 
@@ -16,10 +16,8 @@ It’s part of the Ritschsonic YouTube series, where we build a modern food deli
 
 🔹 Real-world logic like Profile Update & Product Fetching
 
-🎥 Follow the tutorial on Ritschsonic YouTube Channel
- to code along and learn Flutter APIs the fun way!
 
-🚀 Features
+# 🚀 Features :
 
 ✅ Login / Signup using real API calls
 
@@ -34,3 +32,5 @@ It’s part of the Ritschsonic YouTube series, where we build a modern food deli
 🏗️ Modular, scalable architecture
 
 💡 Full walkthrough for Flutter beginners
+
+🎥 Follow My Youtube Channel : Rich Sonic 
