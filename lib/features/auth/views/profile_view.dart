@@ -9,6 +9,7 @@ import 'package:huungry/features/auth/data/auth_repo.dart';
 import 'package:huungry/features/auth/data/user_model.dart';
 import 'package:huungry/features/auth/views/login_view.dart';
 import 'package:huungry/features/auth/widgets/custom_user_txt_field.dart';
+import 'package:huungry/shared/custom_button.dart';
 import 'package:huungry/shared/custom_snack.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -122,22 +123,22 @@ class _ProfileViewState extends State<ProfileView> {
   Widget build(BuildContext context) {
     if(!isGuest) {
       return RefreshIndicator(
-        displacement: 60,
+        displacement: 40,
         color: Colors.white,
         backgroundColor: AppColors.primary,
         onRefresh: () async => await getProfileData(),
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: Scaffold(
-            appBar: AppBar(toolbarHeight: 0.0,
-                backgroundColor: Colors.white,
-                scrolledUnderElevation: 0.0),
+            appBar: AppBar(toolbarHeight: 0.0, backgroundColor: Colors.white, scrolledUnderElevation: 0.0),
+
             body: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: SingleChildScrollView(
                 clipBehavior: Clip.none,
                 child: Skeletonizer(
                   enabled: userModel == null,
+                  containersColor: AppColors.primary.withOpacity(0.3),
                   child: Column(
                     children: [
                       Gap(10),
@@ -198,7 +199,6 @@ class _ProfileViewState extends State<ProfileView> {
                           ),
                         ),
                       ),
-
                       Gap(10),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -206,12 +206,10 @@ class _ProfileViewState extends State<ProfileView> {
                           GestureDetector(
                             onTap: pickImage,
                             child: Card(
-                              elevation: 1,
-                              shadowColor: Colors.grey,
-                              color: Colors.blue.shade800,
+                              elevation: 0.0,
+                              color: Colors.blue.shade900.withOpacity(0.7),
                               child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 10),
+                                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
@@ -221,8 +219,7 @@ class _ProfileViewState extends State<ProfileView> {
                                       color: Colors.white,
                                       size: 13,),
                                     Gap(10),
-                                    Icon(CupertinoIcons.camera, size: 17,
-                                        color: Colors.white),
+                                    Icon(CupertinoIcons.camera, size: 17, color: Colors.white),
                                   ],
                                 ),
                               ),
@@ -231,9 +228,8 @@ class _ProfileViewState extends State<ProfileView> {
                           GestureDetector(
                             onTap: pickImage,
                             child: Card(
-                              elevation: 1,
-                              shadowColor: Colors.grey,
-                              color: Colors.red.shade900,
+                              elevation: 0.0,
+                              color: Colors.red.shade900.withOpacity(0.7),
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 20, vertical: 10),
@@ -274,13 +270,11 @@ class _ProfileViewState extends State<ProfileView> {
                       Gap(20),
                       Divider(),
                       Gap(10),
-                      userModel?.visa == null
-                          ? CustomUserTxtField(
+                      userModel?.visa == null ? CustomUserTxtField(
                         controller: _visa,
                         textInputType: TextInputType.number,
                         label: 'ADD VISA CARD',
-                      )
-                          : Container(
+                      ) : Container(
                         padding: EdgeInsets.symmetric(
                             horizontal: 20, vertical: 20),
                         decoration: BoxDecoration(
@@ -396,7 +390,20 @@ class _ProfileViewState extends State<ProfileView> {
         ),
       );
     } else if (isGuest) {
-      return Center(child: Text('Guest Mode'));
+      return Padding(
+        padding: const EdgeInsets.all(40),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Center(child: Text('Guest Mode')),
+            Gap(20),
+            CustomButton(
+                onTap: () => Navigator.pushReplacement(context , MaterialPageRoute(builder: (c)=>LoginView())),
+                text: 'Go to Login',
+            ),
+          ],
+        ),
+      );
     }
     return SizedBox();
   }

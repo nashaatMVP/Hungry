@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:huungry/core/constants/app_colors.dart';
@@ -15,6 +16,7 @@ class ProductDetailsView extends StatefulWidget {
 
 class _ProductDetailsViewState extends State<ProductDetailsView> {
   double value = 0.5;
+  int? selectedToppingIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +24,15 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         scrolledUnderElevation: 0.0,
+        toolbarHeight: 18,
         leading: GestureDetector(
             onTap: () => Navigator.pop(context),
-            child: Icon(Icons.arrow_back),
+            child: Icon(Icons.arrow_circle_left_outlined, size: 20,color: AppColors.primary),
         ),
       ),
+
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 0),
         child: SingleChildScrollView(
           padding: EdgeInsets.zero,
           child: Column(
@@ -38,39 +42,44 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                 value: value,
                 onChanged: (v) => setState(() => value = v),
               ),
-              Gap(50),
-              CustomText(text: 'Toppings', size: 20),
-              Gap(70),
+              Gap(40),
+              CustomText(text: 'Toppings', size: 18),
+              Gap(10),
               SingleChildScrollView(
                 clipBehavior: Clip.none,
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: List.generate(4, (index) {
+                    final isSelected = selectedToppingIndex == index;
                     return Padding(
-                      padding: const EdgeInsets.only(right: 8),
+                      padding: const EdgeInsets.only(right: 5),
                       child: ToppingCard(
-                        imageUrl: 'assets/test/tomato.png',
+                        color:  isSelected ? Colors.green.withOpacity(0.2) : AppColors.primary.withOpacity(0.1),
                         title: 'Tomato',
-                        onAdd: () {},
+                        imageUrl: 'assets/test/tomato.png',
+                        onAdd: () => setState(() => selectedToppingIndex = index),
                       ),
                     );
                   }),
                 ),
               ),
-              Gap(20),
-              CustomText(text: 'Side Options', size: 20),
-              Gap(70),
+              Gap(25),
+
+              CustomText(text: 'Side Options', size: 18),
+              Gap(10),
               SingleChildScrollView(
                 clipBehavior: Clip.none,
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: List.generate(4, (index) {
+                    final isSelected = selectedToppingIndex == index;
                     return Padding(
                       padding: const EdgeInsets.only(right: 8),
                       child: ToppingCard(
+                        color:  isSelected ? Colors.green.withOpacity(0.2) : AppColors.primary.withOpacity(0.1),
                         imageUrl: 'assets/test/tomato.png',
                         title: 'Tomato',
-                        onAdd: () {},
+                        onAdd: () => setState(() => selectedToppingIndex = index),
                       ),
                     );
                   }),
@@ -81,34 +90,59 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
           ),
         ),
       ),
+
+
       bottomSheet: Container(
-        height: 120,
+        height: 150,
         decoration: BoxDecoration(
-          color: Colors.white,
+          gradient: LinearGradient(
+            colors: [
+              AppColors.primary.withOpacity(0.5),
+              AppColors.primary.withOpacity(0.9),
+              AppColors.primary,
+              AppColors.primary,
+              AppColors.primary,
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
           borderRadius: BorderRadius.circular(30),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.shade800,
-              blurRadius: 15,
-              offset: Offset(0, 0),
-            ),
-          ],
+          // boxShadow: [
+          //   BoxShadow(
+          //     color: Colors.black.withOpacity(0.9),
+          //     blurRadius: 3,
+          //     offset: const Offset(2, 3),
+          //   ),
+          //   BoxShadow(
+          //     color: Colors.black.withOpacity(0.9),
+          //     blurRadius: 800,
+          //     offset: const Offset(300, 50),
+          //   ),
+          // ],
         ),
 
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 20),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CustomText(text: 'Total', size: 15),
-                  CustomText(text: '\$ 18.9', size: 24),
+                  CustomText(text: 'Burger Price :', size: 15, color: Colors.white),
+                  CustomText(text: '\$ 18.9', size: 20, color: Colors.white, weight: FontWeight.w700),
                 ],
               ),
-
-              CustomButton(text: 'Add To Cart', onTap: () {}),
+              CustomButton(
+                widget:  Icon(CupertinoIcons.cart_badge_plus),
+                gap: 10,
+                height: 48,
+                 color: Colors.white,
+                  textColor: AppColors.primary,
+                  text: 'Add To Cart',
+                  onTap: () {},
+              ),
             ],
           ),
         ),

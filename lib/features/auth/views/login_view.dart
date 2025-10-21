@@ -7,6 +7,7 @@ import 'package:huungry/core/network/api_error.dart';
 import 'package:huungry/features/auth/data/auth_repo.dart';
 import 'package:huungry/features/auth/views/signup_view.dart';
 import 'package:huungry/root.dart';
+import 'package:huungry/shared/custom_button.dart';
 import 'package:huungry/shared/custom_snack.dart';
 import 'package:huungry/shared/custom_text.dart';
 import 'package:huungry/shared/custom_txtfield.dart';
@@ -60,102 +61,108 @@ class _LoginViewState extends State<LoginView> {
       canPop: false,
       child: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
-        child: Scaffold(
-          appBar: AppBar(toolbarHeight: 0.0, backgroundColor: Colors.white),
-          resizeToAvoidBottomInset: true,
-          backgroundColor: Colors.white,
-          body: Form(
-            key: formKey,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Gap(100),
-                  SvgPicture.asset(
-                    'assets/logo/logo.svg',
-                    color: AppColors.primary,
-                  ),
-                  Gap(10),
-                  CustomText(
-                    text: 'Welcome Back, Discover The Fast Food',
-                    color: AppColors.primary,
-                    size: 13,
-                    weight: FontWeight.w500,
-                  ),
-                  Gap(60),
-                  glassContainer(child: Column(
-                      children: [
-                        Gap(30),
-                        CustomTxtfield(
-                          controller: emailController,
-                          hint: 'Email Address',
-                          isPassword: false,
+        child: glassContainer(
+          child: Scaffold(
+            extendBody: true,
+            resizeToAvoidBottomInset: false,
+            backgroundColor: Colors.transparent,
+            body: Form(
+              key: formKey,
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 0),
+                  child: Column(
+                    children: [
+                      Gap(100),
+                      Banner(
+                        color: Colors.green.shade700,
+                        shadow: BoxShadow(color: Colors.black),
+                        message: 'Rich Sonic',
+                        location: BannerLocation.topStart,
+                        child: SvgPicture.asset(
+                          'assets/logo/logo.svg',
+                          color: Colors.white70,
                         ),
-                        Gap(10),
-                        CustomTxtfield(
-                          controller: passController,
-                          hint: 'Password',
-                          isPassword: true,
-                        ),
-                        Gap(20),
-
-                        /// Login Button
-                        isLoading
-                        ? CupertinoActivityIndicator(color: AppColors.primary)
-                        : CustomAuthBtn(
-                          text: 'Login',
-                          onTap: login,
-                          color: AppColors.primary,
-                          textColor: Colors.white,
-                        ),
-
-                        Gap(10),
-                        Row(
-                          children: [
-                            ///  Signup
-                            Expanded(
-                              child: CustomAuthBtn(
-                                color: Colors.white,
-                                textColor: AppColors.primary,
-                                text: 'Signup',
-                                onTap: () {
-                                  Navigator.pushReplacement(
+                      ),
+                      Gap(10),
+                      CustomText(
+                        text: 'Welcome Back, Discover The Fast Food',
+                        color: Colors.white70,
+                        size: 13,
+                        weight: FontWeight.w500,
+                      ),
+                      Gap(60),
+                      Column(
+                        children: [
+                          Gap(30),
+                          CustomTxtfield(
+                            controller: emailController,
+                            hint: 'Email Address',
+                            isPassword: false,
+                          ),
+                          Gap(8),
+                          CustomTxtfield(
+                            controller: passController,
+                            hint: 'Password',
+                            isPassword: true,
+                          ),
+                          Gap(20),
+                          /// Login Button
+                           CustomButton(
+                            gap: 10,
+                            widget: isLoading ? CupertinoActivityIndicator(color: AppColors.primary) : null,
+                            height: 45,
+                            text: 'Login',
+                            onTap: login,
+                            color: Colors.white.withOpacity(0.9),
+                            textColor: AppColors.primary,
+                          ),
+                          Gap(20),
+                          Row(
+                            children: [
+                              ///  Signup
+                              Expanded(
+                                child: CustomAuthBtn(
+                                  textColor: Colors.white,
+                                  text: 'Signup',
+                                  onTap: () => Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
                                       builder: (c) {
                                         return SignupView();
                                       },
                                     ),
-                                  );
-                                },
+                                  ),
+                                ),
                               ),
-                            ),
-                            Gap(15),
-                            /// Guest
-                            Expanded(
-                              child: CustomAuthBtn(
-                                color: Colors.white,
-                                textColor: AppColors.primary,
-                                text: 'Guest',
-                                onTap: () {
-                                  Navigator.push(
+                              Gap(15),
+
+                              /// Guest
+                              Expanded(
+                                child: CustomAuthBtn(
+                                  isIcon: true,
+                                  textColor: Colors.white,
+                                  text: 'Guest',
+                                  onTap: () => Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                       builder: (c) {
                                         return Root();
                                       },
                                     ),
-                                  );
-                                },
+                                  ),
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                        Gap(10),
-                      ],
-                    )),
-                  Gap(185),
-                  CustomText(text: '@RichSonic2025', color: AppColors.primary, size: 12, weight: FontWeight.bold),
-                ],
+                            ],
+                          ),
+                          Gap(10),
+                        ],
+                      ),
+                      Gap(250),
+                      CustomText(text: '@RichSonic2025', color: Colors.white, size: 12, weight: FontWeight.bold),
+                    ],
+                  ),
+                ),
               ),
             ),
           ),

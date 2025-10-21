@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:huungry/features/auth/views/login_view.dart';
-import 'package:huungry/root.dart';
 import 'package:huungry/splash.dart';
-import 'features/auth/views/signup_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

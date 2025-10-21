@@ -1,38 +1,64 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:huungry/core/constants/app_colors.dart';
 
 Widget glassContainer({required Widget child}) {
-  return ClipRRect(
-    borderRadius: BorderRadius.circular(20),
-    child: BackdropFilter(
-      enabled: true,
-      filter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
-      child: Container(
-        padding: const EdgeInsets.all(12),
-        margin: const EdgeInsets.symmetric(horizontal: 10),
-        decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.2),
-          gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomRight,
-            colors: [
-              AppColors.primary,
-              AppColors.primary,
-              Colors.black.withOpacity(0.9),
-              Colors.black.withOpacity(0.9),
-              AppColors.primary,
-              AppColors.primary,
-            ],
-          ),
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(
-            width: 1.2,
-            color: Colors.black.withOpacity(0.2),
+  return Stack(
+    clipBehavior: Clip.none,
+    alignment: Alignment.bottomLeft,
+    children: [
+
+      Positioned.fill(
+        child: IgnorePointer(
+          child: Opacity(
+            opacity: 0.9,
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                color: Colors.white.withOpacity(0.1),
+                child: Lottie.asset(
+                  'assets/lottie/burger.json',
+                  fit: BoxFit.cover,
+                  repeat: true,
+                ),
+              ),
+            ),
           ),
         ),
-        child: child,
       ),
-    ),
+
+      // --- Frosted Glass Layer ---
+      Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              AppColors.primary.withOpacity(0.8),
+              AppColors.primary.withOpacity(0.9),
+              AppColors.primary.withOpacity(0.1),
+            ],
+          ),
+        ),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 20),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.1),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.4),
+                  blurRadius: 80,
+                  offset: const Offset(0, 0),
+                ),
+              ],
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+            child: child,
+          ),
+        ),
+      ),
+    ],
   );
 }

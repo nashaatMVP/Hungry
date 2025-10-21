@@ -37,7 +37,7 @@ class _HomeViewState extends State<HomeView> {
               elevation: 0,
               pinned: true,
               floating: false,
-              toolbarHeight: 140,
+              toolbarHeight: 150,
               scrolledUnderElevation: 0,
               backgroundColor: Colors.white,
               automaticallyImplyLeading: false,
@@ -90,7 +90,7 @@ class _HomeViewState extends State<HomeView> {
                 sliver: SliverGrid(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                      crossAxisCount: 2,
-                     childAspectRatio: 0.83,
+                     childAspectRatio: 0.8,
                       mainAxisSpacing: 10,
                       crossAxisSpacing: 10,
                   ),

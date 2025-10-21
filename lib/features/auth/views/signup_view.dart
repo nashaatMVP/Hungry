@@ -7,6 +7,7 @@ import 'package:huungry/features/auth/data/auth_repo.dart';
 import 'package:huungry/features/auth/views/login_view.dart';
 import 'package:huungry/features/auth/widgets/custom_btn.dart';
 import 'package:huungry/root.dart';
+import 'package:huungry/shared/custom_button.dart';
 import 'package:huungry/shared/glass_container.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../shared/custom_snack.dart';
@@ -48,27 +49,26 @@ class _SignupViewState extends State<SignupView> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
       child: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
-        child: Scaffold(
-          appBar: AppBar(toolbarHeight: 0.0, backgroundColor: Colors.white),
-          backgroundColor: Colors.white,
-          body: Form(
-            key: formKey,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Gap(100),
-                  SvgPicture.asset('assets/logo/logo.svg' , color: AppColors.primary),
-                  Gap(10),
-                  Center(child: CustomText(text: 'Welcome to our Food App' , color: AppColors.primary)),
-                  Gap(40),
-                  glassContainer(child: Column(
+        child: glassContainer(
+          child: Scaffold(
+            backgroundColor: Colors.transparent, 
+            body: Form(
+              key: formKey,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Gap(100),
+                    SvgPicture.asset('assets/logo/logo.svg' , color: Colors.white70),
+                    Gap(10),
+                    Center(child: CustomText(text: 'Welcome to our Food App' , color: Colors.white70)),
+                    Gap(40),
+                    Column(
                       children: [
                         Gap(30),
                         CustomTxtfield(
@@ -76,36 +76,39 @@ class _SignupViewState extends State<SignupView> {
                           hint: 'Name',
                           isPassword: false,
                         ),
-                        Gap(10),
+                        Gap(8),
                         CustomTxtfield(
                           controller: emailController,
                           hint: 'Email Address',
                           isPassword: false,
                         ),
-                        Gap(10),
+                        Gap(8),
                         CustomTxtfield(
                           controller: passController,
                           hint: 'Password',
                           isPassword: true,
                         ),
                         Gap(20),
-
+          
                         /// Sign up
-                        isLoading ? CupertinoActivityIndicator() : CustomAuthBtn(
-                          color: AppColors.primary,
-                          textColor: Colors.white,
+                        CustomButton(
+                          height: 45,
+                          gap: 10,
+                          widget: isLoading ? CupertinoActivityIndicator(color: AppColors.primary,) : null,
+                          color: Colors.white,
+                          textColor: AppColors.primary,
                           text: 'Sign up',
                           onTap: signup,
                         ),
-
-                        Gap(10),
+          
+                        Gap(20),
                         Row(
                           children: [
                             ///  Login
                             Expanded(
                               child:   CustomAuthBtn(
-                                textColor: AppColors.primary,
-                                color: Colors.white,
+                                color: Colors.transparent,
+                                textColor: Colors.white,
                                 text: 'Login',
                                 onTap: () {
                                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (c) {
@@ -118,29 +121,27 @@ class _SignupViewState extends State<SignupView> {
                             /// Guest
                             Expanded(
                               child: CustomAuthBtn(
-                                color: Colors.white,
-                                textColor: AppColors.primary,
+                                color: Colors.transparent,
+                                textColor: Colors.white,
                                 text: 'Guest',
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (c) {
-                                        return Root();
-                                      },
-                                    ),
-                                  );
-                                },
+                                onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (c) {
+                                      return Root();
+                                    },
+                                  ),
+                                ),
                               ),
                             ),
                           ],
                         ),
-                        Gap(10),
                       ],
-                    )),
-                  Gap(150),
-                  CustomText(text: '@RichSonic2025', color: AppColors.primary, size: 12, weight: FontWeight.bold),
-                ],
+                    ),
+                    Gap(200),
+                    CustomText(text: '@RichSonic2025', color: Colors.white, size: 12, weight: FontWeight.bold),
+                  ],
+                ),
               ),
             ),
           ),

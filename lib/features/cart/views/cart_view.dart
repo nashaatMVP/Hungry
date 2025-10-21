@@ -140,7 +140,7 @@ class _CartViewState extends State<CartView> {
                       child: CustomButton(
                         height: 45,
                         text: 'Checkout',
-                        gap: 180,
+                        gap: 80,
                         widget: CustomText(text: '230\$', size: 14),
                         color: Colors.white,
                         width: double.infinity,

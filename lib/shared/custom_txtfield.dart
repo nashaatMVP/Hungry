@@ -28,38 +28,43 @@ class _CustomTxtfieldState extends State<CustomTxtfield> {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: widget.controller,
-      cursorHeight: 20,
-      cursorColor: AppColors.primary,
-      validator: (v) {
-        if(v == null || v.isEmpty) {
-          return 'please fill ${widget.hint}';
-        }
-        null;
-      },
-      obscureText: _obscureText,
-      decoration: InputDecoration(
-        suffixIcon: widget.isPassword ? GestureDetector(
-            onTap: _togglePassword,
-            child: Icon(CupertinoIcons.eye ,color: AppColors.primary),
-        ) : null,
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Colors.grey),
+    return SizedBox(
+      height: 45,
+      child: TextFormField(
+        cursorHeight: 20,
+        style: TextStyle(fontSize: 14,color: Colors.white),
+        controller: widget.controller,
+        cursorColor: AppColors.primary,
+        validator: (v) {
+          if(v == null || v.isEmpty) {
+            return 'please fill ${widget.hint}';
+          }
+          null;
+        },
+        obscureText: _obscureText,
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.symmetric(horizontal: 10),
+          suffixIcon: widget.isPassword ? GestureDetector(
+              onTap: _togglePassword,
+              child: Icon(CupertinoIcons.eye ,color: Colors.white,size: 19,),
+          ) : null,
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: BorderSide(color: Colors.grey,width: 0.4),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: Colors.grey,width: 0.7),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: BorderSide(color: Colors.red),
+          ),
+          hintText: widget.hint,
+          hintStyle: TextStyle(color: Colors.white),
+          fillColor: Colors.transparent.withOpacity(0.3),
+          filled: true,
         ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20),
-          borderSide: BorderSide(color: Colors.grey),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20),
-          borderSide: BorderSide(color: Colors.red),
-        ),
-        hintText: widget.hint,
-        hintStyle: TextStyle(color: AppColors.primary),
-        fillColor: Colors.white,
-        filled: true,
       ),
     );
   }
