@@ -1,33 +1,36 @@
-# huungry
+# 🍔 Huungry App
 
-Hungry APP
+Huungry ? Yes Let's Eat!,  is a Flutter application built to teach beginners how to work with APIs in Flutter — from zero to hero.
 
-<img
-  src="https://drive.google.com/uc?export=view&id=16X397VfSxtQtW7nJxFYj3pi2_s7rg7XX"
-  alt="Huungry App Screenshot"
-  style="max-width:100%;height:auto;display:block;margin:0 auto;"
-/>
+It’s part of the Ritschsonic YouTube series, where we build a modern food delivery app from scratch, focusing on:
 
-## File Structure
-lib/
-core/
-constants/
-api_endpoints.dart
-app_colors.dart
-app_strings.dart
-network/
-api_service.dart
-api_exceptions.dart
-utils/
-helpers.dart
-validators.dart
-features/
-food/
-data/
-food_model.dart
-food_repository.dart
-view/
-food_page.dart
-widgets/
-food_card.dart
-main.dart
+🔹 API integration (GET, POST, Headers, Tokens, Query Params)
+
+🔹 Clean and scalable folder structure
+
+🔹 Authentication (Login, Signup, Logout, Auto Login)
+
+🔹 State management and network error handling
+
+🔹 Responsive UI and reusable widgets
+
+🔹 Real-world logic like Profile Update & Product Fetching
+
+
+# 🚀 Features :
+
+✅ Login / Signup using real API calls
+
+🔐 Token-based Authentication
+
+🧠 Auto Login with local storage
+
+👤 Profile View & Update
+
+🍕 Fetching and displaying product data
+
+🏗️ Modular, scalable architecture
+
+💡 Full walkthrough for Flutter beginners
+
+🎥 Follow My Youtube Channel : Rich Sonic 
