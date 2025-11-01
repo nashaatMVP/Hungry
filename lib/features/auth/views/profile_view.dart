@@ -36,10 +36,10 @@ class _ProfileViewState extends State<ProfileView> {
   bool isLoadingLogout = false;
   AuthRepo authRepo = AuthRepo();
 
-  Future <void> autoLogin () async {
+  Future<void> autoLogin() async {
     final user = await authRepo.autoLogin();
     setState(() => isGuest = authRepo.isGuest);
-    if(user != null) setState(() => userModel = user);
+    if (user != null) setState(() => userModel = user);
   }
 
   /// get profile
@@ -69,8 +69,9 @@ class _ProfileViewState extends State<ProfileView> {
         imagePath: selectedImage,
         visa: _visa.text.trim(),
       );
-      ScaffoldMessenger.of(context).showSnackBar(
-          customSnack('Profile updated Successfully'));
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(customSnack('Profile updated Successfully'));
       setState(() => isLoadingUpdate = false);
       setState(() => userModel = user);
       await getProfileData();
@@ -88,7 +89,9 @@ class _ProfileViewState extends State<ProfileView> {
       setState(() => isLoadingLogout = true);
       await authRepo.logout();
       await Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (c) => LoginView()));
+        context,
+        MaterialPageRoute(builder: (c) => LoginView()),
+      );
       setState(() => isLoadingLogout = false);
     } catch (e) {
       setState(() => isLoadingLogout = false);
@@ -99,7 +102,8 @@ class _ProfileViewState extends State<ProfileView> {
   /// pick image
   Future<void> pickImage() async {
     final pickedImage = await ImagePicker().pickImage(
-        source: ImageSource.gallery);
+      source: ImageSource.gallery,
+    );
     if (pickedImage != null) {
       setState(() {
         selectedImage = pickedImage.path;
@@ -114,14 +118,14 @@ class _ProfileViewState extends State<ProfileView> {
       _name.text = userModel?.name.toString() ?? 'Knuckles';
       _email.text = userModel?.email.toString() ?? 'Knuckles@gmail.com';
       _address.text =
-      userModel?.address == null ? "55 Dubai, UAE" : userModel!.address!;
+          userModel?.address == null ? "55 Dubai, UAE" : userModel!.address!;
     });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    if(!isGuest) {
+    if (!isGuest) {
       return RefreshIndicator(
         displacement: 40,
         color: Colors.white,
@@ -130,7 +134,11 @@ class _ProfileViewState extends State<ProfileView> {
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: Scaffold(
-            appBar: AppBar(toolbarHeight: 0.0, backgroundColor: Colors.white, scrolledUnderElevation: 0.0),
+            appBar: AppBar(
+              toolbarHeight: 0.0,
+              backgroundColor: Colors.white,
+              scrolledUnderElevation: 0.0,
+            ),
 
             body: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -146,15 +154,21 @@ class _ProfileViewState extends State<ProfileView> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           GestureDetector(
-                            onTap: () =>
-                                Navigator.popUntil(
-                                    context, (route) => route.isFirst),
-                            child: Icon(Icons.arrow_back,
-                                color: AppColors.primary),
+                            onTap:
+                                () => Navigator.popUntil(
+                                  context,
+                                  (route) => route.isFirst,
+                                ),
+                            child: Icon(
+                              Icons.arrow_back,
+                              color: AppColors.primary,
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 8, vertical: 0),
+                              horizontal: 8,
+                              vertical: 0,
+                            ),
                             child: Icon(CupertinoIcons.settings_solid),
                           ),
                         ],
@@ -181,20 +195,28 @@ class _ProfileViewState extends State<ProfileView> {
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 border: Border.all(
-                                    width: 1, color: AppColors.primary),
+                                  width: 1,
+                                  color: AppColors.primary,
+                                ),
                                 color: Colors.grey.shade100,
                               ),
                               clipBehavior: Clip.antiAlias,
-                              child: selectedImage != null
-                                  ? Image.file(
-                                  File(selectedImage!), fit: BoxFit.cover)
-                                  : (userModel?.image != null &&
-                                  userModel!.image!.isNotEmpty)
-                                  ? Image.network(
-                                  userModel!.image!, fit: BoxFit.cover,
-                                  errorBuilder: (context, err, builder) =>
-                                      Icon(Icons.person))
-                                  : Icon(Icons.person),
+                              child:
+                                  selectedImage != null
+                                      ? Image.file(
+                                        File(selectedImage!),
+                                        fit: BoxFit.cover,
+                                      )
+                                      : (userModel?.image != null &&
+                                          userModel!.image!.isNotEmpty)
+                                      ? Image.network(
+                                        userModel!.image!,
+                                        fit: BoxFit.cover,
+                                        errorBuilder:
+                                            (context, err, builder) =>
+                                                Icon(Icons.person),
+                                      )
+                                      : Icon(Icons.person),
                             ),
                           ),
                         ),
@@ -207,19 +229,27 @@ class _ProfileViewState extends State<ProfileView> {
                             onTap: pickImage,
                             child: Card(
                               elevation: 0.0,
-                              color: Colors.blue.shade900.withOpacity(0.7),
+                              color: const Color.fromARGB(255, 6, 78, 13),
                               child: Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 30,
+                                  vertical: 8,
+                                ),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     CustomText(
-                                      text: 'upload image',
+                                      text: 'Upload',
                                       weight: FontWeight.w500,
                                       color: Colors.white,
-                                      size: 13,),
+                                      size: 13,
+                                    ),
                                     Gap(10),
-                                    Icon(CupertinoIcons.camera, size: 17, color: Colors.white),
+                                    Icon(
+                                      CupertinoIcons.camera,
+                                      size: 17,
+                                      color: Colors.white,
+                                    ),
                                   ],
                                 ),
                               ),
@@ -229,20 +259,27 @@ class _ProfileViewState extends State<ProfileView> {
                             onTap: pickImage,
                             child: Card(
                               elevation: 0.0,
-                              color: Colors.red.shade900.withOpacity(0.7),
+                              color: const Color.fromARGB(255, 111, 2, 40),
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 10),
+                                  horizontal: 30,
+                                  vertical: 8,
+                                ),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    CustomText(text: 'remove image',
-                                        weight: FontWeight.w500,
-                                        color: Colors.white,
-                                        size: 13),
+                                    CustomText(
+                                      text: 'Remove',
+                                      weight: FontWeight.w500,
+                                      color: Colors.white,
+                                      size: 13,
+                                    ),
                                     Gap(10),
-                                    Icon(CupertinoIcons.trash, size: 18,
-                                        color: Colors.white),
+                                    Icon(
+                                      CupertinoIcons.trash,
+                                      size: 16,
+                                      color: Colors.white,
+                                    ),
                                   ],
                                 ),
                               ),
@@ -250,18 +287,12 @@ class _ProfileViewState extends State<ProfileView> {
                           ),
                         ],
                       ),
-                      Gap(30),
+                      Gap(20),
 
                       /// Form
-                      CustomUserTxtField(
-                        controller: _name,
-                        label: 'Name',
-                      ),
+                      CustomUserTxtField(controller: _name, label: 'Name'),
                       Gap(25),
-                      CustomUserTxtField(
-                        controller: _email,
-                        label: 'Email',
-                      ),
+                      CustomUserTxtField(controller: _email, label: 'Email'),
                       Gap(25),
                       CustomUserTxtField(
                         controller: _address,
@@ -270,83 +301,107 @@ class _ProfileViewState extends State<ProfileView> {
                       Gap(20),
                       Divider(),
                       Gap(10),
-                      userModel?.visa == null ? CustomUserTxtField(
-                        controller: _visa,
-                        textInputType: TextInputType.number,
-                        label: 'ADD VISA CARD',
-                      ) : Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 20),
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(colors: [
-                            Colors.grey.shade900,
-                            Colors.grey.shade800,
-                            Colors.grey.shade900,
-                          ]),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Row(
-                          children: [
-                            Image.asset('assets/icon/profileVisa.png', width: 45,
-                              color: Colors.white,),
-                            Gap(20),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                      userModel?.visa == null
+                          ? CustomUserTxtField(
+                            controller: _visa,
+                            textInputType: TextInputType.number,
+                            label: 'add VISA CARD',
+                          )
+                          : Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 15,
+                            ),
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  Colors.blue.shade900,
+                                  Colors.blue.shade900,
+                                  Colors.blue.shade500,
+                                  Colors.blue.shade900,
+                                ],
+                              ),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Row(
                               children: [
-                                CustomText(text: 'Debit card',
+                                Image.asset(
+                                  'assets/icon/profileVisa.png',
+                                  width: 45,
+                                  color: Colors.white,
+                                ),
+                                Gap(20),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    CustomText(
+                                      text: 'Debit Card',
+                                      color: Colors.white,
+                                      size: 14,
+                                    ),
+                                    CustomText(
+                                      text:
+                                          userModel?.visa ??
+                                          "**** **** **** 9857",
+                                      color: Colors.white,
+                                      size: 12,
+                                    ),
+                                  ],
+                                ),
+                                Spacer(),
+                                Container(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 10,
+                                    vertical: 4,
+                                  ),
+                                  decoration: BoxDecoration(
                                     color: Colors.white,
-                                    size: 15),
-                                CustomText(text: userModel?.visa ??
-                                    "**** **** **** 9857",
-                                    color: Colors.white,
-                                    size: 14)
+                                    borderRadius: BorderRadius.circular(40),
+                                  ),
+                                  child: CustomText(
+                                    text: 'Default',
+                                    color: Colors.grey.shade800,
+                                    size: 12,
+                                    weight: FontWeight.w500,
+                                  ),
+                                ),
+                                Gap(8),
+                                Icon(
+                                  CupertinoIcons.check_mark_circled_solid,
+                                  color: Colors.white,
+                                ),
                               ],
                             ),
-                            Spacer(),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 4),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(40),
-                              ),
-                              child: CustomText(text: 'Default',
-                                  color: Colors.grey.shade800,
-                                  size: 14,
-                                  weight: FontWeight.w500),
-                            ),
-                            Gap(10),
-                            Icon(CupertinoIcons.check_mark_circled_solid,
-                                color: Colors.white),
-                          ],
-                        ),
-                      ),
-                      Gap(10),
+                          ),
+                      Gap(5),
                       SizedBox(
                         height: 70,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-
                             /// Edit
                             Expanded(
                               child: GestureDetector(
                                 onTap: updateProfileData,
                                 child: Container(
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                      color: AppColors.primary,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child:
-                                    isLoadingUpdate
-                                        ? CupertinoActivityIndicator(
-                                        color: Colors.white)
-                                        : Center(child: CustomText(
-                                      text: 'Edit Profile',
-                                      weight: FontWeight.w600,
-                                      color: Colors.white,
-                                      size: 15,))
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    color: AppColors.primary,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child:
+                                      isLoadingUpdate
+                                          ? CupertinoActivityIndicator(
+                                            color: Colors.white,
+                                          )
+                                          : Center(
+                                            child: CustomText(
+                                              text: 'Edit Profile',
+                                              weight: FontWeight.w600,
+                                              color: Colors.white,
+                                              size: 15,
+                                            ),
+                                          ),
                                 ),
                               ),
                             ),
@@ -361,19 +416,23 @@ class _ProfileViewState extends State<ProfileView> {
                                   height: 50,
                                   decoration: BoxDecoration(
                                     color: Colors.white,
-                                    border: Border.all(color: AppColors.primary),
+                                    border: Border.all(
+                                      color: AppColors.primary,
+                                    ),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child:
-                                  isLoadingLogout
-                                      ? CupertinoActivityIndicator(
-                                      color: AppColors.primary)
-                                      : Center(
-                                      child: CustomText(
-                                        text: 'Logout',
-                                        weight: FontWeight.w600,
-                                        color: AppColors.primary,
-                                      )),
+                                      isLoadingLogout
+                                          ? CupertinoActivityIndicator(
+                                            color: AppColors.primary,
+                                          )
+                                          : Center(
+                                            child: CustomText(
+                                              text: 'Logout',
+                                              weight: FontWeight.w600,
+                                              color: AppColors.primary,
+                                            ),
+                                          ),
                                 ),
                               ),
                             ),
@@ -398,8 +457,12 @@ class _ProfileViewState extends State<ProfileView> {
             Center(child: Text('Guest Mode')),
             Gap(20),
             CustomButton(
-                onTap: () => Navigator.pushReplacement(context , MaterialPageRoute(builder: (c)=>LoginView())),
-                text: 'Go to Login',
+              onTap:
+                  () => Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (c) => LoginView()),
+                  ),
+              text: 'Go to Login',
             ),
           ],
         ),

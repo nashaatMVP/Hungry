@@ -114,7 +114,6 @@ class _GlassBottomNavBarState extends State<GlassBottomNavBar> {
                         ),
                       ),
 
-
                       ///Row with items
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

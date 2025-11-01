@@ -6,9 +6,10 @@ import '../../../core/constants/app_colors.dart';
 import '../../../shared/custom_text.dart';
 
 class SpicySlider extends StatefulWidget {
-  const SpicySlider({super.key, required this.value, required this.onChanged});
+  const SpicySlider({super.key, required this.value, required this.onChanged, required this.img});
   final double value;
   final ValueChanged<double> onChanged;
+  final String img;
 
   @override
   State<SpicySlider> createState() => _SpicySliderState();
@@ -22,17 +23,9 @@ class _SpicySliderState extends State<SpicySlider> {
       children: [
         SizedBox(
           height: 200,
-          child: ModelViewer(
-              src: 'assets/3dModel/burger.glb',
-            autoPlay: true,
-          ),
+          width: double.infinity,
+          child: Image.network(widget.img),
         ),
-
-        // SizedBox(
-        //   height: 200,
-        //   width: double.infinity,
-        //   child: Image.asset('assets/test/test.png'),
-        // ),
 
         Padding(
           padding:  EdgeInsets.symmetric(horizontal: 40.0),

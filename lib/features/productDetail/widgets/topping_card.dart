@@ -30,7 +30,7 @@ class ToppingCard extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 12 , vertical: 10),
               child: Column(
                 children: [
-                  Image.asset(imageUrl, fit: BoxFit.contain , width: 80, height:  50),
+                  Image.network(imageUrl, fit: BoxFit.contain , width: 80, height:  50),
 
                   Gap(10),
 

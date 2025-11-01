@@ -22,148 +22,125 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passController = TextEditingController();
-
+  final formKey = GlobalKey<FormState>();
+  final emailController = TextEditingController(text: 'Sonic3@gmail.com');
+  final passController = TextEditingController(text: '123456789');
   bool isLoading = false;
-  AuthRepo authRepo = AuthRepo();
+  final authRepo = AuthRepo();
+
   Future<void> login() async {
-    if(formKey.currentState!.validate()) {
-      setState(() => isLoading = true);
-      try {
-        final user = await authRepo.login(emailController.text.trim(), passController.text.trim());
-        if(user != null) {
-          Navigator.push(context, MaterialPageRoute(builder: (c) => Root()));
-        }
-        setState(() => isLoading = false);
-      } catch (e) {
-        setState(() => isLoading = false);
-        String errorMsg = 'unhandled error in login';
-        if(e is ApiError) {
-          errorMsg = e.message;
-        }
-        ScaffoldMessenger.of(context).showSnackBar(customSnack(errorMsg));
-      }
+    if (!formKey.currentState!.validate()) return;
+    setState(() => isLoading = true);
+
+    try {
+      final user = await authRepo.login(
+        emailController.text.trim(),
+        passController.text.trim(),
+      );
+      if (user != null) Navigator.push(context, MaterialPageRoute(builder: (_) =>  Root()));
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        customSnack(e is ApiError ? e.message : 'Unhandled login error'),
+      );
+    } finally {
+      setState(() => isLoading = false);
     }
   }
 
   @override
-  void initState() {
-    emailController.text = 'Sonic3@gmail.com';
-    passController.text = '123456789';
-    super.initState();
-  }
-  
-  @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: false,
-      child: GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(),
-        child: glassContainer(
-          child: Scaffold(
-            extendBody: true,
-            resizeToAvoidBottomInset: false,
-            backgroundColor: Colors.transparent,
-            body: Form(
-              key: formKey,
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 0),
-                  child: Column(
-                    children: [
-                      Gap(100),
-                      Banner(
-                        color: Colors.green.shade700,
-                        shadow: BoxShadow(color: Colors.black),
-                        message: 'Rich Sonic',
-                        location: BannerLocation.topStart,
-                        child: SvgPicture.asset(
-                          'assets/logo/logo.svg',
-                          color: Colors.white70,
+    return GestureDetector(
+      onTap: FocusScope.of(context).unfocus,
+      child: glassContainer(
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Form(
+            key: formKey,
+            child: Column(
+              children: [
+                const Gap(140),
+                Banner(
+                  color: Colors.green.shade700,
+                  message: 'Rich Sonic',
+                  location: BannerLocation.topStart,
+                  child: SvgPicture.asset('assets/logo/logo.svg', color: Colors.white70),
+                ),
+                const Gap(10),
+                const CustomText(
+                  text: 'Welcome Back, Discover The Fast Food',
+                  color: Colors.white70,
+                  size: 13,
+                  weight: FontWeight.w500,
+                ),
+                const Gap(50),
+                Column(
+                  children: [
+                    CustomTxtfield(
+                      controller: emailController,
+                      hint: 'Email Address',
+                      isPassword: false,
+                    ),
+                    const Gap(10),
+                    CustomTxtfield(
+                      controller: passController,
+                      hint: 'Password',
+                      isPassword: true,
+                    ),
+                    const Gap(20),
+                    CustomButton(
+                      height: 45,
+                      gap: 10,
+                      text: 'Login',
+                      color: Colors.white.withOpacity(0.9),
+                      textColor: AppColors.primary,
+                      widget: isLoading
+                          ? CupertinoActivityIndicator(color: AppColors.primary)
+                          : null,
+                      onTap: login,
+                    ),
+                    const Gap(20),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: CustomAuthBtn(
+                            text: 'Signup',
+                            textColor: Colors.white,
+                            onTap: () => Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (_) => const SignupView()),
+                            ),
+                          ),
                         ),
-                      ),
-                      Gap(10),
-                      CustomText(
-                        text: 'Welcome Back, Discover The Fast Food',
-                        color: Colors.white70,
-                        size: 13,
-                        weight: FontWeight.w500,
-                      ),
-                      Gap(60),
-                      Column(
-                        children: [
-                          Gap(30),
-                          CustomTxtfield(
-                            controller: emailController,
-                            hint: 'Email Address',
-                            isPassword: false,
+                        const Gap(15),
+                        Expanded(
+                          child: CustomAuthBtn(
+                            text: 'Guest',
+                            isIcon: true,
+                            textColor: Colors.white,
+                            onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (_) =>  Root()),
+                            ),
                           ),
-                          Gap(8),
-                          CustomTxtfield(
-                            controller: passController,
-                            hint: 'Password',
-                            isPassword: true,
-                          ),
-                          Gap(20),
-                          /// Login Button
-                           CustomButton(
-                            gap: 10,
-                            widget: isLoading ? CupertinoActivityIndicator(color: AppColors.primary) : null,
-                            height: 45,
-                            text: 'Login',
-                            onTap: login,
-                            color: Colors.white.withOpacity(0.9),
-                            textColor: AppColors.primary,
-                          ),
-                          Gap(20),
-                          Row(
-                            children: [
-                              ///  Signup
-                              Expanded(
-                                child: CustomAuthBtn(
-                                  textColor: Colors.white,
-                                  text: 'Signup',
-                                  onTap: () => Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (c) {
-                                        return SignupView();
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Gap(15),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
 
-                              /// Guest
-                              Expanded(
-                                child: CustomAuthBtn(
-                                  isIcon: true,
-                                  textColor: Colors.white,
-                                  text: 'Guest',
-                                  onTap: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (c) {
-                                        return Root();
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Gap(10),
-                        ],
-                      ),
-                      Gap(250),
-                      CustomText(text: '@RichSonic2025', color: Colors.white, size: 12, weight: FontWeight.bold),
-                    ],
+                const Spacer(),
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 55),
+                  child: Center(
+                    child: CustomText(
+                      size: 12,
+                      color: Colors.white,
+                      text: '@RichSonic2025',
+                      weight: FontWeight.bold,
+                    ),
                   ),
                 ),
-              ),
+              ],
             ),
           ),
         ),

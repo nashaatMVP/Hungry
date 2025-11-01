@@ -13,6 +13,7 @@ import '../../../core/constants/app_colors.dart';
 import '../../../shared/custom_snack.dart';
 import '../../../shared/custom_text.dart';
 import '../../../shared/custom_txtfield.dart';
+
 class SignupView extends StatefulWidget {
   const SignupView({super.key});
 
@@ -63,7 +64,7 @@ class _SignupViewState extends State<SignupView> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    Gap(100),
+                    Gap(140),
                     SvgPicture.asset('assets/logo/logo.svg' , color: Colors.white70),
                     Gap(10),
                     Center(child: CustomText(text: 'Welcome to our Food App' , color: Colors.white70)),
@@ -138,7 +139,7 @@ class _SignupViewState extends State<SignupView> {
                         ),
                       ],
                     ),
-                    Gap(200),
+                    Gap(290),
                     CustomText(text: '@RichSonic2025', color: Colors.white, size: 12, weight: FontWeight.bold),
                   ],
                 ),
